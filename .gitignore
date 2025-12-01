@@ -2,3 +2,4 @@ discovery_cache.json
 ._*
 .DS_Store
 tmdb_movies_master.cache.json
+.jsonl
