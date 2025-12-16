@@ -2,4 +2,5 @@ tmdb_movies_master.jsonl filter=lfs diff=lfs merge=lfs -text
 data/tmdb_movies_10000.json filter=lfs diff=lfs merge=lfs -text
 *.jsonl filter=lfs diff=lfs merge=lfs -text
 *.json filter=lfs diff=lfs merge=lfs -text
+movies_no_jan_1.csv filter=lfs diff=lfs merge=lfs -text
 *.csv filter=lfs diff=lfs merge=lfs -text
