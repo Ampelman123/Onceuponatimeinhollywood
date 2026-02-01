@@ -1,0 +1,84 @@
+% ============================================================================
+% ADJUSTED ABSTRACT (replace the existing one)
+% ============================================================================
+
+\begin{abstract}
+The COVID-19 pandemic introduced a profound structural shock on the film ecosystem, creating a shift from both industrial and user experience perspectives. This project aims to quantify the persistence and interaction of these changes across three temporal regimes—Pre-COVID (2017–2019), COVID-Shock (2020–2021), and Post-COVID Adjustment (2022–2024)—using high-frequency time-series data extracted from online APIs like The Movie Database (TMDb) and IMDb. We examine how key film characteristics such as runtime, budget, revenue, popularity, and audience engagement evolved differently for theatrical versus streaming releases across these periods. Using bootstrap confidence intervals, permutation tests, and DKW confidence bands, we find that theatrical releases experienced a sharper COVID shock with partial post-COVID recovery, while streaming releases showed distinct patterns of resource reallocation during the pandemic followed by normalization. Our analysis suggests that the pandemic accelerated existing industry trends rather than creating entirely new dynamics.
+\end{abstract}
+
+% ============================================================================
+% ADJUSTED INTRODUCTION (add this paragraph before "The remainder of this paper...")
+% ============================================================================
+
+% Add after "...the Pre-COVID Baseline (2017–2019), the COVID-Shock (2020–2021), and the Post-COVID Adjustment (2022–2024)."
+
+A key dimension of this structural shift is the tension between theatrical and streaming release strategies. The pandemic accelerated the adoption of streaming platforms as primary distribution channels, raising questions about whether this was a temporary response to cinema closures or a permanent realignment. We investigate this through an era-comparison framework: rather than directly comparing theatrical and streaming releases (which differ inherently in their characteristics), we examine how each strategy evolved across the three temporal periods. This approach allows us to isolate the COVID effect within each release strategy and understand the differential impact of the pandemic on these two distribution models.
+
+% ============================================================================
+% NEW SECTION: RELEASE STRATEGY AND COVID ERA ANALYSIS
+% (Add this after Introduction, either as part of Methods or as separate Results subsection)
+% ============================================================================
+
+\subsection{Release Strategy Across COVID Eras}\label{subsec:release-strategy}
+
+A central question in understanding the pandemic's impact on cinema is how theatrical and streaming release strategies responded differently to the crisis. Rather than comparing these two strategies directly—which would yield trivially significant differences due to their inherent dissimilarities—we adopted an era-comparison framework. For each strategy, we compared film characteristics across Pre-COVID (2017–2019), COVID-Shock (2020–2021), and Post-COVID (2022–2024) periods using bootstrap 95\% confidence intervals, two-sample permutation tests (10,000 iterations), and Cohen's d effect sizes.
+
+\paragraph{Runtime.} Theatrical runtimes showed a pronounced dip during COVID (mean = 90.8 min) compared to Pre-COVID (95.8 min, $p < 0.001$, $d = 0.17$), followed by a strong rebound Post-COVID (102.5 min). The COVID-to-Post difference was highly significant ($p < 0.001$, $d = -0.40$). In contrast, streaming runtimes remained relatively stable: Pre-COVID (86.3 min) versus Post-COVID (86.0 min) showed no significant difference ($p = 0.81$). This suggests theatrical productions contracted during the crisis and then overcompensated, while streaming maintained its format consistency.
+
+\paragraph{Budget.} The budget dynamics revealed contrasting adaptation strategies. Theatrical budgets dropped during COVID (\$22.2M vs \$29.5M Pre-COVID, $p = 0.04$) and recovered Post-COVID (\$35.0M), though the Pre-Post comparison was not significant ($p = 0.06$). Streaming budgets, however, surged dramatically during COVID (\$19.5M vs \$6.2M Pre-COVID, $p < 0.001$, $d = -0.41$) before falling Post-COVID (\$8.9M). This pattern indicates that studios temporarily redirected resources to streaming during theatrical closures.
+
+\paragraph{Audience Engagement.} Vote counts—our proxy for audience engagement—showed perhaps the clearest divergence. Theatrical engagement collapsed during COVID (641 votes vs 1,341 Pre-COVID, $p < 0.001$) and did not recover Post-COVID (681 votes). Streaming engagement spiked during COVID (553 votes vs 282 Pre-COVID, $p < 0.001$) before dropping Post-COVID (199 votes, $p < 0.001$ for COVID-Post). This temporary surge suggests viewers actively sought streaming content during lockdowns but returned to more distributed attention patterns afterward.
+
+\paragraph{Production Scale.} We also examined production infrastructure through the number of production companies and international co-production rates. For theatrical releases, the average number of production companies remained stable from Pre-COVID (6.04 companies) through COVID-Shock (5.75 companies, $p = 0.29$), but surged significantly Post-COVID (8.97 companies, $p < 0.001$), suggesting increased collaborative investment. Streaming releases showed a similar pattern, rising from 4.76 companies Pre-COVID to 6.61 Post-COVID ($p < 0.001$).
+
+International co-production rates—films involving multiple countries—declined during COVID as cross-border collaboration became logistically challenging. For theatrical releases, international co-productions dropped from 73.4\% Pre-COVID to 65.7\% during COVID-Shock ($p < 0.001$), before rebounding to 79.9\% Post-COVID. Streaming releases exhibited a similar contraction: 66.2\% Pre-COVID to 57.7\% during COVID ($p < 0.001$), with partial recovery to 63.4\% Post-COVID. The number of production countries per film showed corresponding declines during COVID for both theatrical (1.81 → 1.62 countries, $p < 0.001$) and streaming (1.59 → 1.45 countries, $p = 0.014$) releases, followed by Post-COVID increases. This structural contraction and subsequent expansion in production networks provides evidence that the pandemic disrupted not just distribution but the production process itself, with a notable shift toward more collaborative, internationally-backed productions in the recovery period.
+
+\paragraph{Synthesis.} Our era-comparison analysis reveals that theatrical and streaming releases experienced the COVID shock differently. Theatrical releases showed a clear disruption-recovery pattern across most metrics, with runtimes, budgets, and popularity falling during COVID and rebounding (or over-correcting) Post-COVID. Streaming releases showed a different signature: a temporary surge in investment and engagement during COVID, followed by normalization to near-Pre-COVID levels. This asymmetry supports the interpretation that the pandemic accelerated an existing industry realignment rather than creating a fundamentally new equilibrium.
+
+% ============================================================================
+% FIGURE SUGGESTIONS (add to Results section)
+% ============================================================================
+
+% Example figure inclusion (adjust path as needed):
+%
+% \begin{figure}[ht]
+% \vskip 0.2in
+% \begin{center}
+% \centerline{\includegraphics[width=\columnwidth]{release_strategy_era_analysis/runtime_monthly}}
+% \caption{Monthly runtime trends for theatrical (blue) and streaming (orange) releases, with period shading for Pre-COVID, COVID-Shock, and Post-COVID eras. Dashed lines indicate linear trends within each period. Theatrical runtimes show a V-shaped pattern around COVID, while streaming remains stable.}
+% \label{fig:runtime-monthly}
+% \end{center}
+% \vskip -0.2in
+% \end{figure}
+%
+% \begin{figure}[ht]
+% \vskip 0.2in
+% \begin{center}
+% \centerline{\includegraphics[width=\columnwidth]{release_strategy_era_analysis/cornerstone_summary}}
+% \caption{Composite Industry Index normalized to Pre-COVID baseline (=1.0) for theatrical and streaming releases. The index combines runtime, budget, revenue, popularity, and engagement metrics. Both strategies show COVID-era disruption, but theatrical recovery is more pronounced Post-COVID.}
+% \label{fig:cornerstone}
+% \end{center}
+% \vskip -0.2in
+% \end{figure}
+
+% ============================================================================
+% KEY STATISTICS FOR QUICK REFERENCE
+% ============================================================================
+
+% Runtime:
+%   Theatrical: Pre 95.8 → COVID 90.8 → Post 102.5 min
+%   Streaming:  Pre 86.3 → COVID 83.7 → Post 86.0 min
+%
+% Budget:
+%   Theatrical: Pre $29.5M → COVID $22.2M → Post $35.0M
+%   Streaming:  Pre $6.2M  → COVID $19.5M → Post $8.9M
+%
+% Engagement (vote_count):
+%   Theatrical: Pre 1341 → COVID 641 → Post 681
+%   Streaming:  Pre 282  → COVID 553 → Post 199
+%
+% Significant era comparisons (p < 0.05):
+%   - Theatrical runtime: all three comparisons
+%   - Streaming budget: Pre-COVID, COVID-Post
+%   - Theatrical engagement: Pre-COVID, Pre-Post
+%   - Streaming engagement: all three comparisons
