@@ -1,36 +1,24 @@
-# Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
 
-# Virtual environments
 env/
 venv/
 .venv/
 ENV/
 
-# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 .DS_Store
 
-# Data files
 *.csv
 
-# Images (optional - uncomment if you want to exclude)
-# *.png
-# *.jpg
-# *.jpeg
-# *.pdf
-
-# Jupyter Notebook
 .ipynb_checkpoints
 
-# Distribution / packaging
 build/
 dist/
 *.egg-info/
