@@ -4,19 +4,21 @@ from collections import defaultdict
 from datetime import datetime
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+from tueplots.constants.color import rgb
+from tueplots import bundles
 
-try:
-    from tueplots import bundles
-    from tueplots.constants.color import rgb
-except ImportError:
-    bundles = None
+import sys
 
+# Add root to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+from utils.plotting_style import set_style
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(SCRIPT_DIR, "..", "dataset_final.csv")
+DATA_PATH = os.path.join(SCRIPT_DIR, "../../data/dataset_final.csv")
 
 PERIODS = {
     "pre": (datetime(2017, 1, 1), datetime(2019, 12, 31)),
@@ -31,24 +33,122 @@ COLORS = {
 }
 
 PERIOD_BG = {
-    "pre": rgb.tue_lightblue,   
-    "covid": rgb.tue_mauve,      
-    "post": rgb.tue_lightgreen,  
+    "pre": rgb.tue_lightblue,
+    "covid": rgb.tue_mauve,
+    "post": rgb.tue_lightgreen,
 }
 
 
 def apply_style():
-    if bundles:
-        plt.rcParams.update(bundles.icml2024(column="full", nrows=1, ncols=1))
-    plt.rcParams.update({"text.usetex": False})
+    set_style(column="half", nrows=1, ncols=1)
+
+    # Ensure all text is the same size as requested (ICML bundle consistency)
+    base_size = plt.rcParams["font.size"]
+    plt.rcParams.update(
+        {
+            "axes.labelsize": base_size,
+            "axes.titlesize": base_size,
+            "xtick.labelsize": base_size,
+            "ytick.labelsize": base_size,
+            "legend.fontsize": base_size,
+            "text.usetex": False,
+            "figure.constrained_layout.use": False,  # Disable to allow manual subplots_adjust
+        }
+    )
+
+
+# ... (skipping unchanged code)
+
+
+def create_metric_plot(
+    means,
+    metric,
+    title,
+    ylabel,
+    out_prefix,
+    smooth_window=3,
+    show_legend=False,
+    nrows=1,
+):
+    # Calculate figsize based on specific nrows for this plot
+    rc_params = bundles.icml2024(column="half", nrows=nrows, ncols=1)
+    figsize = rc_params["figure.figsize"]
+
+    # Explicitly disable layout engine to respect subplots_adjust
+    fig, ax = plt.subplots(figsize=figsize, layout=None)
+    add_period_background(ax)
+
+    # ... (skipping plotting code)
+
+    ax.set_xlabel("Time")
+    ax.set_ylabel(ylabel)
+    ax.grid(axis="y", alpha=0.25, linestyle="--", linewidth=0.6)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    if show_legend:
+        # Place legend under the plot
+        # Adjusted for ncol=1 so it fits in width
+        ax.legend(
+            loc="upper center",
+            bbox_to_anchor=(0.5, -0.25),
+            ncol=1,
+            frameon=False,
+            fontsize=plt.rcParams["font.size"],
+        )
+
+    # Manual margin adjustment for consistent Axes dimensions
+    # Standard Physical Height = H (nrows=1)
+
+    # Target Geometry (Physical units relative to Standard H):
+    # Left Margin: 0.23H
+    # Right Margin: 0.02H (Pos: 0.98)
+    # Top Margin: 0.05H (Pos: 0.95)
+    # Axes Height: 0.75H (Standard Bottom: 0.20)
+
+    left_std = 0.23
+    right_std = 0.98
+    top_std = 0.95
+    bottom_std = 0.20
+
+    if nrows > 1.1:
+        # Runtime case (nrows=1.3)
+        scale = nrows
+        # Maintain physical top margin
+        top_new = 1.0 - ((1.0 - top_std) / scale)
+
+        # Maintain physical axes height
+        axes_height_new = (top_std - bottom_std) / scale
+
+        # Bottom is remainder
+        bottom_new = top_new - axes_height_new
+
+        fig.subplots_adjust(
+            left=left_std, right=right_std, top=top_new, bottom=bottom_new
+        )
+    else:
+        # Standard case
+        fig.subplots_adjust(
+            left=left_std, right=right_std, top=top_std, bottom=bottom_std
+        )
+
+    pdf_path = os.path.join(SCRIPT_DIR, f"{out_prefix}.pdf")
+    png_path = os.path.join(SCRIPT_DIR, f"{out_prefix}.png")
+    fig.savefig(pdf_path)  # bbox_inches="tight" removed to enforce strict geometry
+    fig.savefig(png_path, dpi=300)
+    plt.close(fig)
 
 
 def load_monthly_lists():
     csv.field_size_limit(1_000_000)
 
     monthly_data = {
-        "theatrical": defaultdict(lambda: {"runtime": [], "budget": [], "revenue": [], "popularity": []}),
-        "streaming": defaultdict(lambda: {"runtime": [], "budget": [], "revenue": [], "popularity": []}),
+        "theatrical": defaultdict(
+            lambda: {"runtime": [], "budget": [], "revenue": [], "popularity": []}
+        ),
+        "streaming": defaultdict(
+            lambda: {"runtime": [], "budget": [], "revenue": [], "popularity": []}
+        ),
     }
 
     with open(DATA_PATH, "r", encoding="utf-8") as f:
@@ -163,8 +263,22 @@ def add_period_trends(ax, months, values, color):
         ax.plot(x_period, trend, linestyle="--", color=color, alpha=0.5, linewidth=1.3)
 
 
-def create_metric_plot(means, metric, title, ylabel, out_prefix, smooth_window=3):
-    fig, ax = plt.subplots()
+def create_metric_plot(
+    means,
+    metric,
+    title,
+    ylabel,
+    out_prefix,
+    smooth_window=3,
+    show_legend=False,
+    nrows=1,
+):
+    # Calculate figsize based on specific nrows for this plot (preserving "half" column width)
+    # We use the bundle to get the correct aspect ratio/height
+    rc_params = bundles.icml2024(column="half", nrows=nrows, ncols=1)
+    figsize = rc_params["figure.figsize"]
+
+    fig, ax = plt.subplots(figsize=figsize)
     add_period_background(ax)
 
     for strategy in ("theatrical", "streaming"):
@@ -176,29 +290,72 @@ def create_metric_plot(means, metric, title, ylabel, out_prefix, smooth_window=3
         y_s = moving_average(y, window=smooth_window)
 
         # raw (faint)
-        ax.plot(x, y, color=COLORS[strategy], alpha=0.25, linewidth=1.0,
-                label=f"{strategy.capitalize()} (raw)")
+        ax.plot(
+            x,
+            y,
+            color=COLORS[strategy],
+            alpha=0.25,
+            linewidth=1.0,
+            label=f"{strategy.capitalize()} (raw)",
+        )
 
         # smoothed (strong)
-        ax.plot(x, y_s, color=COLORS[strategy], alpha=0.9, linewidth=2.2,
-                label=f"{strategy.capitalize()} (smoothed)")
+        ax.plot(
+            x,
+            y_s,
+            color=COLORS[strategy],
+            alpha=0.9,
+            linewidth=2.2,
+            label=f"{strategy.capitalize()} (smoothed)",
+        )
 
         add_period_trends(ax, x, y_s, COLORS[strategy])
 
-    ax.set_title(title)
     ax.set_xlabel("Time")
     ax.set_ylabel(ylabel)
     ax.grid(axis="y", alpha=0.25, linestyle="--", linewidth=0.6)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.legend(loc="upper left", frameon=True)
 
-    fig.tight_layout()
+    if show_legend:
+        # Place legend under the plot
+        # Move left to align with Y-label (Runtime minutes) and tight vertical fit
+        ax.legend(
+            loc="upper left",
+            bbox_to_anchor=(-0.16, -0.25),
+            ncol=2,
+            frameon=False,
+            fontsize=plt.rcParams["font.size"],
+        )
+
+    # Manual margin adjustment for consistent Axes dimensions
+    # Standard Physical Height = H (nrows=1)
+    # We want physical top margin to be constant = (1 - top_std) * 1.0 = 0.05
+    # We want physical axes height to be constant = (top_std - bottom_std) * 1.0 = 0.75
+
+    left_std = 0.17
+    right_std = 0.98
+    top_std = 0.95
+    bottom_std = 0.20
+
+    scale = nrows
+
+    # New top fraction: 1 - (physical_margin / scale)
+    top_new = 1.0 - ((1.0 - top_std) / scale)
+
+    # New axes height fraction: physical_height / scale
+    axes_height_fraction = (top_std - bottom_std) / scale
+
+    bottom_new = top_new - axes_height_fraction
+
+    fig.subplots_adjust(left=left_std, right=right_std, top=top_new, bottom=bottom_new)
+
+    # fig.tight_layout() # Disabled to respect manual margins
 
     pdf_path = os.path.join(SCRIPT_DIR, f"{out_prefix}.pdf")
     png_path = os.path.join(SCRIPT_DIR, f"{out_prefix}.png")
-    fig.savefig(pdf_path, bbox_inches="tight")
-    fig.savefig(png_path, dpi=300, bbox_inches="tight")
+    fig.savefig(pdf_path)
+    fig.savefig(png_path, dpi=300)
     plt.close(fig)
 
     print(f"✓ Created: {pdf_path}")
@@ -219,7 +376,18 @@ def main():
     ]
 
     for metric, title, ylabel, out_prefix in specs:
-        create_metric_plot(means, metric, title, ylabel, out_prefix, smooth_window=3)
+        is_runtime = metric == "runtime"
+        create_metric_plot(
+            means,
+            metric,
+            title,
+            ylabel,
+            out_prefix,
+            smooth_window=3,
+            show_legend=is_runtime,
+            nrows=1.25 if is_runtime else 1.0,
+        )
+
 
 if __name__ == "__main__":
     main()

@@ -8,7 +8,7 @@ import sys
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
-INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/raw_dataset_arda.csv")
+INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/dataset_final.csv")
 PRE_COVID_YEARS = [2016, 2017, 2018, 2019]
 POST_COVID_YEARS = [2021, 2022, 2023, 2024]
 N_BOOTSTRAP = (

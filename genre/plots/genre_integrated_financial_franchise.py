@@ -9,7 +9,7 @@ import ast
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from utils.plotting_style import set_style, COLORS
 
-INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/raw_dataset_arda.csv")
+INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/dataset_final.csv")
 OUTPUT_FILE = os.path.join(
     os.path.dirname(__file__), "genre_integrated_financial_franchise.pdf"
 )
@@ -114,6 +114,18 @@ rows = (num_genres // cols) + (1 if num_genres % cols > 0 else 0)
 
 set_style(column="full", nrows=rows, ncols=cols)
 
+# Ensure all text is the same size as requested
+base_size = plt.rcParams["font.size"]
+plt.rcParams.update(
+    {
+        "axes.labelsize": base_size,
+        "axes.titlesize": base_size,
+        "xtick.labelsize": base_size,
+        "ytick.labelsize": base_size,
+        "legend.fontsize": base_size,
+    }
+)
+
 COLOR_REV_TOTAL = COLORS["revenue"]
 COLOR_REV_FRAN = COLORS["franchise"]
 COLOR_BUDG = COLORS["budget"]
@@ -199,7 +211,7 @@ fig.legend(
     handles=handles,
     loc="lower center",
     ncol=4,
-    bbox_to_anchor=(0.5, -0.05),
+    bbox_to_anchor=(0.5, -0.07),
     frameon=False,
 )
 

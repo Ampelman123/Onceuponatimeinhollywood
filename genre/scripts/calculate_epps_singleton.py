@@ -13,7 +13,7 @@ except ImportError:
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
-INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/raw_dataset_arda.csv")
+INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/dataset_final.csv")
 OUTPUT_FILE = os.path.join(
     os.path.dirname(__file__), "../../data/epps_singleton_metrics.csv"
 )

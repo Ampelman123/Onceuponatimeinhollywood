@@ -26,7 +26,7 @@ def set_style(column="full", nrows=1, ncols=1):
 # Standard Colors for Consistency (Paul Tol Muted approximate mapping for semantic meaning if needed)
 # Or manually defined compatible colors if specific semantics (like Profit/Loss) are required.
 # Muted: [rose, indigo, sand, green, cyan, wine, teal, olive, purple, pale grey, black]
-# We'll define some semantic constants here that scripts can import.
+
 COLORS = {
     "increase": rgb.tue_green,  # Standard matplotlib green, reasonable match for 'good'
     "decrease": rgb.tue_red,  # Standard matplotlib red, reasonable match for 'bad'

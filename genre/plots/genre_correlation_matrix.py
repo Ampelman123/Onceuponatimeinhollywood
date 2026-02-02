@@ -11,7 +11,7 @@ from utils.plotting_style import set_style
 
 set_style()
 
-INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/raw_dataset_arda.csv")
+INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/dataset_final.csv")
 OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "genre_correlation_matrix.pdf")
 N_BOOTSTRAP = 1000
 

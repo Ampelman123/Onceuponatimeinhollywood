@@ -9,7 +9,7 @@ import ast
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from utils.plotting_style import set_style, COLORS
 
-INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/raw_dataset_arda.csv")
+INPUT_FILE = os.path.join(os.path.dirname(__file__), "../../data/dataset_final.csv")
 OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "genre_drift_plot.pdf")
 
 PRE_COVID_YEARS = [2016, 2017, 2018, 2019]
