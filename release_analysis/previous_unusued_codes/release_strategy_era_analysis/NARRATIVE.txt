@@ -1,0 +1,73 @@
+NARRATIVE: RELEASE STRATEGY ACROSS PRE / COVID / POST ERAS
+
+Hypothesis
+The film industry experienced a structural shift during COVID that affected
+theatrical and streaming releases differently, with distinct dynamics across
+the pre-COVID (2017–2019), COVID-shock (2020–2021), and post-COVID (2022–2024)
+periods.
+
+Approach
+We compare temporal eras within each release strategy (not theatrical vs
+streaming directly). For each metric, we use bootstrap confidence intervals,
+permutation tests, DKW bands, and Cohen’s d. Monthly time-series charts provide
+trend context with period shading. A p-value table summarizes significance
+across era comparisons.
+
+Key Findings
+
+1) Runtime
+- Theatrical runtimes drop during COVID and rebound strongly post-COVID.
+  Pre vs COVID and COVID vs Post are both significant with small-to-moderate
+  effect sizes.
+- Streaming runtimes shift slightly during COVID and then stabilize; pre vs
+  post is not significant. This suggests a stronger COVID-era disruption in
+  theatrical runtimes than in streaming.
+
+2) Budget
+- Theatrical budgets dip during COVID and rise in post-COVID, but the pre vs
+  post difference is not significant. The major movement is the COVID shock
+  and partial recovery.
+- Streaming budgets surge during COVID and then fall post-COVID, with both
+  COVID-era transitions significant. This is one of the clearest COVID-era
+  shifts for streaming.
+
+3) Revenue
+- Theatrical revenue declines in COVID, with a significant pre vs COVID drop,
+  and remains below pre-COVID in post-COVID (pre vs post is significant).
+- Streaming revenue shows weaker era shifts; only COVID vs post is significant.
+  This implies box office revenues are more sensitive to era effects.
+
+4) Popularity
+- Theatrical popularity dips during COVID and rises sharply post-COVID; all
+  era comparisons are significant.
+- Streaming popularity steadily increases across periods; all comparisons are
+  significant but effect sizes are smaller than theatrical.
+
+5) Audience Engagement (vote_count)
+- Theatrical engagement collapses during COVID and remains lower post-COVID;
+  pre vs COVID and pre vs post are significant.
+- Streaming engagement rises in COVID then drops post-COVID; all era
+  comparisons are significant, suggesting a strong pandemic-driven attention
+  spike for streaming.
+
+Overall Interpretation
+Theatrical releases experienced a clear COVID shock with partial post-COVID
+recovery, especially in runtime, popularity, and engagement. Streaming shows a
+different pattern: budget and engagement spike during COVID, while post-COVID
+levels often revert downward. This supports the hypothesis of a pandemic-era
+reallocation of resources and attention toward streaming, followed by a post-
+COVID normalization.
+
+Genre Context
+The genre period trends (two-panel line chart) show that the mix of genres in
+theatrical and streaming releases changes across eras, but the directions are
+not uniform across strategies. This suggests that strategy-specific genre
+composition is part of how studios adapted during COVID.
+
+Conclusion
+Across pre / COVID / post eras, both strategies change, but the COVID shock is
+stronger and more consistent in theatrical outcomes (runtime, popularity,
+engagement) while streaming shows sharper shifts in budget and engagement.
+These temporal patterns align with the hypothesis that COVID accelerated the
+role of streaming while disrupting theatrical release dynamics, with partial
+but uneven recovery in the post-COVID era.
