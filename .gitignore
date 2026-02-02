@@ -1,7 +1,21 @@
-discovery_cache.json
-._*
+# System
 .DS_Store
+._*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Data
+data/
+discovery_cache.json
 tmdb_movies_master.cache.json
-.jsonl
+*.jsonl
 movie_time_series_final.csv
 movie_time_series_no_jan_1.csv
+*.csv
+*.jsonl
+*.json
+
